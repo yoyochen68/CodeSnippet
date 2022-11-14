@@ -6,7 +6,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useState, useEffect } from "react"
 import NextNProgress from 'nextjs-progressbar';
-import { Update } from "@material-ui/icons";
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Home() {
