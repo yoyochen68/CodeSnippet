@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Icon from "@mui/material/Icon";
 import styled from 'styled-components';
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
