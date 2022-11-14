@@ -5,6 +5,7 @@ import { redirect } from "next/dist/server/api-utils"
 import PostSmall from "../components/PostSmall"
 import Post from "../components/Post"
 import Comments from "../components/Comments"
+import { prisma } from '../server/db/client'
 
 export default function Profilel({ userPosts, userComments }) {
     const { data: session } = useSession()
