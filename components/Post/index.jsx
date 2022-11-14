@@ -1,28 +1,26 @@
 import Image from "next/image"
-
 import PostActions from "../PostActions"
-
 import formatTimeAgo from "../../utils/formatTimeAgo"
 import highlight from "../../utils/highlight"
-
 import { twMerge } from "tailwind-merge"
 
-export default function Post({ onComment, onLike, onShare, liked, post, user, className = "" }) {
+
+export default function Post({ totalLikes, onComment, onLike, onShare, liked, post, user, className = "", totalComments }) {
 
   return (
-    <>
-      <div className={twMerge("flex items-center m-auto", className)}>
+    <div>
+      <div className={twMerge("flex items-center m-auto ", )}>
         <div className="flex-shrink-0 min-w-2xl">
 
-          {user?.image &&
-            <Image
-              className="h-12 w-12 rounded-full"
-              src={user.image}
-              width={50}
-              height={50}
-              alt=""
-            />
-          }
+          {/* {user.image && */}
+          <Image
+            className="h-12 w-12 rounded-full"
+            src={user.image}
+            width={50}
+            height={50}
+            alt="post author"
+          />
+          {/* } */}
         </div>
         <div className="ml-4 flex-1">
           <div className="flex items-center justify-between">
@@ -57,9 +55,10 @@ export default function Post({ onComment, onLike, onShare, liked, post, user, cl
           onLike={onLike}
           onShare={onShare}
           liked={liked}
-          totalComments={post.totalComments}
-          totalLikes={post.totalLikes} />
+          totalLikes={totalLikes}
+          totalComments={totalComments}
+           />
       </div>
-    </>
+    </div>
   )
 }

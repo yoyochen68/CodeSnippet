@@ -1,4 +1,6 @@
+
 import { useState } from "react"
+import { useSession, signIn, signOut } from "next-auth/react"
 
 import SimpleCodeEditor from "../../components/SimpleCodeEditor"
 import Button from "../Button"
@@ -7,10 +9,15 @@ import LanguageDropdown from "../LanguageDropdown"
 export default function NewPostForm({ defaultLanguage = "markdown", defaultCode = "", onSubmit, onChange, className = "" }) {
   const [code, setCode] = useState(defaultCode)
   const [language, setLanguage] = useState(defaultLanguage)
+  const { data: session } = useSession()
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    onSubmit({ code, language })
+    if (session) {
+      e.preventDefault()
+      onSubmit({ code, language })
+    } else {
+      signIn()
+    }
   }
 
   const handleChange = (value) => {
@@ -33,7 +40,7 @@ export default function NewPostForm({ defaultLanguage = "markdown", defaultCode 
           />
           <SimpleCodeEditor
             // className="rounded-none rounded-b-xl"
-            className="mt-5"
+            className="mt-5 mb-3"
             value={code}
             onChange={handleChange}
             language={language}

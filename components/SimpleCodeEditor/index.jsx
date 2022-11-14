@@ -8,7 +8,7 @@ export default function SimpleCodeEditor({ language = "markdown", value, onChang
   return (
     <>
       <div
-        className={twMerge("h-96 overflow-hidden rounded-xl", className)}
+        className={twMerge("h-60 overflow-hidden rounded-xl", className)}
       >
         <Editor
           language={language}

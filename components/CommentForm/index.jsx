@@ -1,12 +1,14 @@
 import { useState } from "react"
 import Image from "next/image"
 import Button from "../Button"
+
+
 export default function NewPostForm({ onSubmit, user, className = "", textareaRef }) {
   const [comment, setComment] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit({ comment })
+    onSubmit( comment )
   }
 
   return (
@@ -17,10 +19,10 @@ export default function NewPostForm({ onSubmit, user, className = "", textareaRe
           <div className="flex-shrink-0 text-gray-400">
             <Image
               className="h-12 w-12 rounded-full"
-              src={user.image}
+              src={user?.image}
               width={50}
               height={50}
-              alt=""
+              alt="commenter"
             />
           </div>
           <div className="ml-5 flex-1">
@@ -41,7 +43,7 @@ export default function NewPostForm({ onSubmit, user, className = "", textareaRe
             />
             <Button
               type="submit"
-              >
+            >
               Add Comment
             </Button>
           </div>

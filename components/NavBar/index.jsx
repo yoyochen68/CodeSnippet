@@ -121,7 +121,7 @@ export default function NavBar(props) {
                               width={50}
                               height={50}
                               quality={100}
-                              alt=""
+                              alt="user iamge"
                             />
                           </Menu.Button>
                         </div>
@@ -207,7 +207,7 @@ export default function NavBar(props) {
                         width={50}
                         height={50}
                         quality={100}
-                        alt=""
+                        alt="user image"
                       />
                     </div>
                     <div className="ml-3">
