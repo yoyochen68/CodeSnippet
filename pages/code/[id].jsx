@@ -19,7 +19,7 @@ left: 50%;
 transform: translate(-50%, -50%);
 `
 
-export default function ({ post }) {
+export default function Post({ post }) {
     // { onComment, onLike, onShare, liked, post, user, className = "" }
 
     const { data: session } = useSession()
