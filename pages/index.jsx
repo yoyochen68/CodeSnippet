@@ -1,16 +1,15 @@
-import { useRouter } from "next/router"
-import Button from "../components/Button"
-import PostSmall from "../components/PostSmall"
-import axios from "axios"
-import useSWR, { useSWRConfig } from 'swr';
-import { useSession, signIn, signOut } from "next-auth/react"
-import { useState, useEffect } from "react"
-import NextNProgress from 'nextjs-progressbar';
+import { useRouter } from 'next/router'
+import Button from '../components/Button'
+import PostSmall from '../components/PostSmall'
+import axios from 'axios'
+import useSWR, { useSWRConfig } from 'swr'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import { useState, useEffect } from 'react'
+import NextNProgress from 'nextjs-progressbar'
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export default function Home() {
-
   const [like, setLike] = useState()
   const [totalLikes, setTotalLikes] = useState()
   const { data: session, status } = useSession()
@@ -22,23 +21,21 @@ export default function Home() {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
-
   const likePost = (postUpdate) => {
     axios.put('/api/posts', {
       postId: postUpdate.id,
-      totalLikes: postUpdate.totalLikes
+      totalLikes: postUpdate.totalLikes,
     })
   }
 
   const unlikePost = (postUpdate) => {
     axios.put('/api/posts', {
       postId: postUpdate.id,
-      totalLikes: postUpdate.totalLikes
+      totalLikes: postUpdate.totalLikes,
     })
   }
 
   const postComponents = data?.posts.map((post) => (
-
     <PostSmall
       loginedUser={loginedUser}
       newTotalLikes={totalLikes}
@@ -49,15 +46,18 @@ export default function Home() {
       // onLike={() => {}}
       onComment={() => router.push(`/code/${post.id}`)}
       onShare={() => router.push(`/code/${post.id}`)}
-    // liked={like}
+      // liked={like}
     />
   ))
 
   return (
-
     <div className="pt-8 pb-10 lg:pt-12 lg:pb-14 mx-auto max-w-7xl px-2">
-      <div className="flex justify-center mx-auto text-3xl font-large">Welcome to Code It</div>
-      <Button onClick={() => session ? router.push("/addPost") : signIn()}>Add a Snippet</Button>
+      <div className="flex justify-center mx-auto text-3xl font-large">
+        Welcome to CODE IT
+      </div>
+      <Button onClick={() => (session ? router.push('/addPost') : signIn())}>
+        Add a Snippet
+      </Button>
       {postComponents}
     </div>
   )
@@ -65,7 +65,6 @@ export default function Home() {
 
 // export default function Home() {
 //   const router = useRouter();
-
 
 //   return (
 //     <div className="pt-8 pb-10 lg:pt-12 lg:pb-14 mx-auto max-w-7xl px-2">
@@ -107,65 +106,62 @@ export default function Home() {
 //   }
 // }
 
-
-
+// const handleOnlike = (post) => {
+//   axios.post('/api/likes', {
+//     postId: post.id
+//   }).then((res) => {
+//     console.log("sucessful", res.data);
+//     // router.reload()
+//     setLike(res.data.liked)
+//     if (res.data.liked == true) {
+//       const totalLikes = post.totalLikes + 1
+//       const postUpdate = { ...post, totalLikes: totalLikes }
+//       const options = { optimisticData: postUpdate, rollbackOnError: true }
+//       mutate('/api/posts', likePost(postUpdate), options)
+//     }
+//     if (res.data.liked == false) {
+//       const totalLikes = post.totalLikes - 1
+//       const postUpdate = { ...post, totalLikes: totalLikes }
+//       const options = { optimisticData: postUpdate, rollbackOnError: true }
+//       mutate('/api/posts', unlikePost(postUpdate), options)
+//     }
+//   });
+// }
 
 // const handleOnlike = (post) => {
-  //   axios.post('/api/likes', {
-  //     postId: post.id
-  //   }).then((res) => {
-  //     console.log("sucessful", res.data);
-  //     // router.reload()
-  //     setLike(res.data.liked)
-  //     if (res.data.liked == true) {
-  //       const totalLikes = post.totalLikes + 1
-  //       const postUpdate = { ...post, totalLikes: totalLikes }
-  //       const options = { optimisticData: postUpdate, rollbackOnError: true }
-  //       mutate('/api/posts', likePost(postUpdate), options)
-  //     }
-  //     if (res.data.liked == false) {
-  //       const totalLikes = post.totalLikes - 1
-  //       const postUpdate = { ...post, totalLikes: totalLikes }
-  //       const options = { optimisticData: postUpdate, rollbackOnError: true }
-  //       mutate('/api/posts', unlikePost(postUpdate), options)
-  //     }
-  //   });
-  // }
-
-  // const handleOnlike = (post) => {
-  //   axios.post('/api/likes', {
-  //     postId: post.id
-  //   }).then((res) => {
-  //     console.log("sucessful", res.data);
-  //     // router.reload()
-  //     setLike(res.data.liked)
-  //     if (res.data.liked == true) {
-  //       axios.put('/api/posts', {
-  //         postId: post.id,
-  //         totalLikes: post.totalLikes + 1
-  //       }).then(res => {
-  //         console.log("success", res.data.totalLikes)
-  //         if (res.data.totalLikes > 0) {
-  //           setTotalLikes(+res.data.totalLikes + 1)
-  //         } else {
-  //           setTotalLikes(1)
-  //         }
-  //       }
-  //       )
-  //     }
-  //     if (res.data.liked == false) {
-  //       axios.put('/api/posts', {
-  //         postId: post.id,
-  //         totalLikes: post.totalLikes - 1
-  //       }).then(res => {
-  //         console.log("success", res.data.totalLikes)
-  //         if (res.data.totalLikes > 0) {
-  //           setTotalLikes(+res.data.totalLikes - 1)
-  //         } else {
-  //           setTotalLikes(0)
-  //         }
-  //       }
-  //       )
-  //     }
-  //   });
-  // }
+//   axios.post('/api/likes', {
+//     postId: post.id
+//   }).then((res) => {
+//     console.log("sucessful", res.data);
+//     // router.reload()
+//     setLike(res.data.liked)
+//     if (res.data.liked == true) {
+//       axios.put('/api/posts', {
+//         postId: post.id,
+//         totalLikes: post.totalLikes + 1
+//       }).then(res => {
+//         console.log("success", res.data.totalLikes)
+//         if (res.data.totalLikes > 0) {
+//           setTotalLikes(+res.data.totalLikes + 1)
+//         } else {
+//           setTotalLikes(1)
+//         }
+//       }
+//       )
+//     }
+//     if (res.data.liked == false) {
+//       axios.put('/api/posts', {
+//         postId: post.id,
+//         totalLikes: post.totalLikes - 1
+//       }).then(res => {
+//         console.log("success", res.data.totalLikes)
+//         if (res.data.totalLikes > 0) {
+//           setTotalLikes(+res.data.totalLikes - 1)
+//         } else {
+//           setTotalLikes(0)
+//         }
+//       }
+//       )
+//     }
+//   });
+// }
